@@ -8,7 +8,11 @@
     "dev:server": "nodemon server/index.js",
     "dev:client": "vite",
     "build": "vite build",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "test": "node crypto/selftest.js && node audit/check-crypto-isolation.js && bash audit/check-deps.sh",
+    "test:crypto": "node crypto/selftest.js",
+    "test:audit": "node audit/check-crypto-isolation.js && bash audit/check-deps.sh",
+    "test:build": "bash audit/check-build.sh"
   },
   "dependencies": {
     "cors": "^2.8.5",

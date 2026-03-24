@@ -3,6 +3,7 @@ import { api } from './lib/api'
 import { wsClient } from './lib/ws'
 import { getMyKeyPair, saveMyKeyPair, getContactKeys, getGroupKeys, saveGroupKey } from './lib/keyStore'
 import { generateKeyPair, isGroupKeyMessage, tryDecryptGroupKey } from './lib/crypto'
+import { runSelfTest } from '../crypto/selftest.js'
 import AuthFlow from './components/AuthFlow'
 import Sidebar from './components/Sidebar'
 import ChatWindow from './components/ChatWindow'
@@ -12,6 +13,7 @@ import GroupEncryptionSetup from './components/GroupEncryptionSetup'
 export default function App() {
   const [authState, setAuthState] = useState('loading')
   const [me, setMe] = useState(null)
+  const [cryptoOk, setCryptoOk] = useState(null)
   const [chats, setChats] = useState([])
   const [activeChatId, setActiveChatId] = useState(null)
   const [keyPair, setKeyPair] = useState(null)
@@ -70,6 +72,10 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    const { passed } = runSelfTest()
+    setCryptoOk(passed)
+    if (!passed) console.error('CRYPTO SELF-TEST FAILED — encryption may be compromised')
+
     loadKeys()
     api.getAuthState().then(({ state }) => setAuthState(state))
     wsClient.connect()
@@ -141,12 +147,18 @@ export default function App() {
 
   return (
     <div className="h-screen flex overflow-hidden bg-p2-bg">
+      {cryptoOk === false && (
+        <div className="fixed top-0 left-0 right-0 z-[100] bg-red-600 text-white text-center py-2 text-sm font-medium">
+          Crypto self-test FAILED — encryption may be compromised. Do not send sensitive messages.
+        </div>
+      )}
       <Sidebar
         chats={chats}
         activeChatId={activeChatId}
         onSelectChat={setActiveChatId}
         me={me}
         keyPair={keyPair}
+        cryptoOk={cryptoOk}
         onOpenKeyManager={() => openKeyManager()}
       />
       <ChatWindow

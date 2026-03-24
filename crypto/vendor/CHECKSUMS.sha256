@@ -1,0 +1,14 @@
+# SHA-256 checksums of vendored cryptographic dependencies.
+# These MUST match the official npm release artifacts.
+#
+# To verify:
+#   shasum -a 256 crypto/vendor/tweetnacl.cjs crypto/vendor/tweetnacl-util.cjs
+#
+# To compare against npm originals:
+#   npm pack tweetnacl@1.0.3 && tar xf tweetnacl-1.0.3.tgz
+#   shasum -a 256 package/nacl-fast.js
+#   npm pack tweetnacl-util@0.15.1 && tar xf tweetnacl-util-0.15.1.tgz
+#   shasum -a 256 package/nacl-util.js
+
+6bcd37a3b20dce913f82d4b23e4e2b661058b4b953df8a3f8c45d56ac4f72447  tweetnacl.cjs      # tweetnacl@1.0.3 nacl-fast.js
+8ee674c29b10a199dd30913cfdac498ac405e6f94d8cbd5853b8b0b7b54b206c  tweetnacl-util.cjs  # tweetnacl-util@0.15.1 nacl-util.js

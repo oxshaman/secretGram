@@ -1,3 +1,13 @@
+/*
+ * TRUST ZONE 3 — Untrusted server.
+ *
+ * This server relays messages via Telegram's TDLib. It NEVER imports
+ * from crypto/ and NEVER has access to encryption keys or plaintext.
+ * All data passing through this server is already ciphertext.
+ *
+ * An auditor can verify: grep -r "import.*crypto" server/ returns nothing.
+ */
+
 import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
@@ -15,6 +25,24 @@ const server = createServer(app)
 
 app.use(cors())
 app.use(express.json())
+
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', [
+    "default-src 'self'",
+    "script-src 'self'",
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data:",
+    "connect-src 'self' ws://localhost:* wss://localhost:*",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+  ].join('; '))
+  res.setHeader('X-Content-Type-Options', 'nosniff')
+  res.setHeader('X-Frame-Options', 'DENY')
+  res.setHeader('Referrer-Policy', 'no-referrer')
+  next()
+})
+
 app.use('/api', apiRouter)
 
 const distPath = join(__dirname, '..', 'dist')

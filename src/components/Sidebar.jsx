@@ -1,8 +1,8 @@
-import { KeyRound } from 'lucide-react'
+import { KeyRound, ShieldCheck, ShieldAlert } from 'lucide-react'
 import { getPublicKeyFingerprint } from '../lib/crypto'
 import ChatList from './ChatList'
 
-export default function Sidebar({ chats, activeChatId, onSelectChat, me, keyPair, onOpenKeyManager }) {
+export default function Sidebar({ chats, activeChatId, onSelectChat, me, keyPair, cryptoOk, onOpenKeyManager }) {
   return (
     <div className="w-80 min-w-[320px] bg-p2-sidebar flex flex-col border-r border-p2-border h-screen">
       <div className="p-3.5 flex items-center justify-between border-b border-p2-border shrink-0">
@@ -21,7 +21,7 @@ export default function Sidebar({ chats, activeChatId, onSelectChat, me, keyPair
             )}
           </div>
         </div>
-        <button
+          <button
           onClick={onOpenKeyManager}
           className="p-2 rounded-xl hover:bg-p2-hover text-p2-muted hover:text-p2-text transition-all duration-150 shrink-0"
           title="Manage encryption keys"
@@ -29,6 +29,16 @@ export default function Sidebar({ chats, activeChatId, onSelectChat, me, keyPair
           <KeyRound className="w-[18px] h-[18px]" strokeWidth={1.5} />
         </button>
       </div>
+      {cryptoOk !== null && (
+        <div className={`px-3.5 py-1.5 border-b border-p2-border text-[11px] flex items-center gap-1.5 ${
+          cryptoOk ? 'text-p2-green' : 'text-red-500'
+        }`}>
+          {cryptoOk
+            ? <><ShieldCheck className="w-3 h-3" strokeWidth={2} /> Crypto self-test passed</>
+            : <><ShieldAlert className="w-3 h-3" strokeWidth={2} /> Crypto self-test FAILED</>
+          }
+        </div>
+      )}
       <ChatList
         chats={chats}
         activeChatId={activeChatId}

@@ -1,3 +1,11 @@
+/*
+ * TRUST ZONE 3 — Untrusted transport.
+ *
+ * This module sends and receives data over HTTP. It handles only
+ * ciphertext and metadata — it NEVER imports or accesses crypto keys.
+ * An auditor does NOT need to trust this module for message secrecy.
+ */
+
 const BASE = '/api'
 
 async function request(path, options = {}) {

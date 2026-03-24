@@ -1,3 +1,11 @@
+/*
+ * TRUST ZONE 3 — Untrusted transport.
+ *
+ * WebSocket client for real-time updates from the server.
+ * This module handles only ciphertext and metadata — it NEVER
+ * imports or accesses crypto keys or plaintext.
+ */
+
 class WebSocketClient {
   constructor() {
     this.ws = null

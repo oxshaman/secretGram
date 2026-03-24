@@ -1,3 +1,16 @@
+/*
+ * TRUST ZONE 2 — Key storage (security-adjacent).
+ *
+ * This module stores cryptographic keys in browser IndexedDB.
+ * It NEVER sends data over the network and NEVER imports network modules.
+ * It does NOT perform any cryptographic operations — those live in crypto/protocol.js.
+ *
+ * An auditor should verify:
+ *   1. No fetch/XMLHttpRequest/WebSocket usage
+ *   2. No imports outside this file's own scope
+ *   3. Keys are stored and retrieved, never transformed
+ */
+
 const DB_NAME = 'p2chat-keys'
 const DB_VERSION = 2
 const STORE_KEYPAIR = 'myKeypair'
