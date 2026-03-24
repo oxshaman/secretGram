@@ -37,14 +37,8 @@ node -v   # should print v18 or higher
 npm -v    # should print a version number
 ```
 
-### 2. Get Telegram API credentials
 
-1. Go to https://my.telegram.org and log in with your phone number
-2. Click **API development tools**
-3. Fill in any app name/short name (doesn't matter what)
-4. Copy your **api_id** (a number) and **api_hash** (a hex string)
-
-### 3. Set up the project
+### 2. Set up the project
 
 ```bash
 cd p2chat
@@ -60,7 +54,7 @@ cp .env.example .env
 Open `.env` in any text editor and paste in your credentials. Ask Mislav for credentials.
 
 
-### 4. Run it
+### 3. Run it
 
 ```bash
 npm run dev
@@ -68,7 +62,7 @@ npm run dev
 
 Open http://localhost:5173 in your browser. You'll be prompted to log in with your Telegram phone number and verification code.
 
-### 5. Exchange keys with someone
+### 4. Exchange keys with someone
 
 P2Chat adds its own encryption layer on top of Telegram. Both you and your contact need to do this:
 
