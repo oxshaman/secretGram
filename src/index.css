@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #2a2a36 transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: #2a2a36;
+    border-radius: 3px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: #3a3a46;
+  }
+
+  body {
+    @apply antialiased;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-optical-sizing: auto;
+  }
+
+  ::selection {
+    background: rgba(124, 138, 255, 0.3);
+    color: #fff;
+  }
+}
+
+@layer components {
+  .glass {
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+  }
+
+  .btn-primary {
+    @apply px-4 py-2.5 rounded-xl bg-p2-accent text-white font-medium transition-all duration-150;
+  }
+  .btn-primary:hover {
+    @apply bg-p2-accent-hover;
+  }
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2.5 rounded-xl text-p2-muted transition-all duration-150;
+  }
+  .btn-ghost:hover {
+    @apply bg-p2-hover text-p2-text;
+  }
+  .btn-ghost:active {
+    transform: scale(0.98);
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2.5 rounded-xl bg-p2-input text-p2-text border border-p2-border placeholder-p2-muted text-sm transition-all duration-150;
+  }
+  .input-field:focus {
+    @apply outline-none border-p2-accent ring-1;
+    --tw-ring-color: rgba(124, 138, 255, 0.2);
+  }
+}
